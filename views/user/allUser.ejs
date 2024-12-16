@@ -1,0 +1,86 @@
+<%-layout('/layout/boilerplate.ejs')-%>
+<body>
+  <div class="allUser">
+    <h2>All Users</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>UserId</th>
+          <th>Username</th>
+          <th>Email</th>
+          <th>isAdmin</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%for(let user of users){%>
+        <tr>
+          <td><%=user._id%></td>
+          <td>
+            <form method="post" action="/user/<%=user._id%>?_method=PUT" style="display: flex;">
+              <input type="text" name="username" value="<%=user.username%>" />
+              <button style="border:none;background-color: transparent;"><i
+                class="fa-regular fa-pen-to-square"
+                style="
+                  font-size: 1.4rem;
+                  margin-left: 1rem;
+                  color: rgb(1, 153, 255);
+                  font-weight: 600;
+                "
+                ;
+              ></i></button>
+            </form>
+          </td>
+          <td>
+            <form method="post" action="/user/<%=user._id%>?_method=PUT" style="display: flex;">
+              <input type="email" name="email" value="<%=user.email%>" />
+              <button style="border:none;background-color: transparent;"><i
+                class="fa-regular fa-pen-to-square"
+                style="
+                  font-size: 1.4rem;
+                  margin-left: 1rem;
+                  color: rgb(1, 153, 255);
+                  font-weight: 600;
+                "
+                ;
+              ></i></button>
+          </td> 
+            </form>
+            <td>Admin: <%if(user.isAdmin){%>
+              <i class="fa-solid fa-check" style="font-size: 1.2;color: green;"></i>
+             <%} else{%>
+              <i class="fa-solid fa-xmark" style="font-size: 1.2;color: red;"></i> 
+           <% } %>
+           <%if(user.email !=="somashekharym@gmail.com"){%>
+            <form method="post" action="/user/<%=user._id%>?_method=PUT">
+              <select value="True" name="isAdmin" id="isAdmin">
+                <option selected>Set Admin</option>
+              <option  value="true">True</option>
+              <option  value="false">False</option>
+            </select>
+            <button type="submit">submit</button>
+          </form>
+           <%}%>
+              
+          </td>
+          <td>
+            <%if(user.email !=="somashekharym@gmail.com"){%>
+            <form method="post" action="/user/<%=user.id%>?_method=DELETE" style="padding: 0">
+              <button type="submit" style="background: transparent;border: none;"><i 
+                class="fa-solid fa-trash"
+                style="
+                  font-size: 1.4rem;
+                  margin-left: 1rem;
+                  color: rgb(238, 61, 61);
+                  padding: 0;
+                "
+                ;
+              ></i></button>
+              <%}%>
+            </form>
+          </td>
+        </tr>
+        <%}%>
+      </tbody>
+    </table>
+  </div>
+</body>

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Order Tracking</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f7fc;
+        padding: 20px;
+      }
+      .order-tracking-container {
+        max-width: 500px;
+        margin: auto;
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+      }
+      .status-bar {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+      }
+      .status {
+        padding: 10px;
+        border-radius: 5px;
+        width: 20%;
+        text-align: center;
+        font-weight: bold;
+        color: #fff;
+      }
+      .status.pending {
+        background-color: lightgray;
+      }
+      .status.active {
+        background-color: #ff9900;
+      }
+      .status.completed {
+        background-color: #4caf50;
+      }
+      .order-id-input {
+        width: 80%;
+        padding: 8px;
+        margin-bottom: 10px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+      }
+      .track-button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      .track-button:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+      }
+      .status-message {
+        font-size: 18px;
+        margin-top: 20px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="order-tracking-container">
+      <h2>Track Your Order</h2>
+      <input
+        type="text"
+        id="order-id"
+        class="order-id-input"
+        placeholder="Enter Order ID"
+      />
+      <button class="track-button" id="track-button" onclick="trackOrder()">
+        Track Order
+      </button>
+
+      <div id="status-bar" class="status-bar" style="display: none">
+        <div class="status pending" id="placed-status">Order Placed</div>
+        <div class="status pending" id="shipped-status">Shipped</div>
+        <div class="status pending" id="out-for-delivery-status">
+          Out for Delivery
+        </div>
+        <div class="status pending" id="delivered-status">Delivered</div>
+      </div>
+
+      <p class="status-message" id="order-status-message">
+        Please enter a valid order ID to track your order.
+      </p>
+    </div>
+
+    <script>
+      // Example order status data
+      const orderStatuses = [
+        {
+          id: "12345",
+          statuses: [
+            "Order Placed",
+            "Shipped",
+            "Out for Delivery",
+            "Delivered",
+          ],
+        },
+        {
+          id: "67890",
+          statuses: ["Order Placed", "Shipped", "Out for Delivery"],
+        },
+      ];
+
+      let currentStatusIndex = 0;
+      let currentOrder = null;
+
+      // Function to track order status
+      function trackOrder() {
+        const orderId = document.getElementById("order-id").value;
+        const order = orderStatuses.find((order) => order.id === orderId);
+
+        if (order) {
+          currentOrder = order;
+          currentStatusIndex = 0;
+          updateStatusDisplay();
+        } else {
+          alert("Order ID not found.");
+        }
+      }
+
+      // Function to update the display of order statuses
+      function updateStatusDisplay() {
+        // Show the status bar and reset status colors
+        document.getElementById("status-bar").style.display = "flex";
+        document.getElementById(
+          "order-status-message"
+        ).innerText = `Order ID: ${currentOrder.id} - Tracking in progress...`;
+
+        // Reset all statuses
+        resetStatusClasses();
+
+        // Update statuses based on the current order's progress
+        currentOrder.statuses.forEach((status, index) => {
+          const statusElement = document.getElementById(
+            `${status.toLowerCase().replace(/\s+/g, "-")}-status`
+          );
+
+          // Mark statuses as completed up to the current stage
+          if (index <= currentStatusIndex) {
+            statusElement.classList.remove("pending");
+            statusElement.classList.add("completed");
+          }
+
+          // Mark the current active status
+          if (index === currentStatusIndex) {
+            statusElement.classList.remove("pending");
+            statusElement.classList.add("active");
+          }
+        });
+
+        // Disable the track button if the order is fully delivered
+        if (currentStatusIndex === currentOrder.statuses.length - 1) {
+          document.getElementById("track-button").disabled = true;
+          document.getElementById(
+            "order-status-message"
+          ).innerText = `Order ID: ${currentOrder.id} - Delivered!`;
+        }
+      }
+
+      // Reset all status elements to the "pending" state
+      function resetStatusClasses() {
+        const statuses = document.querySelectorAll(".status");
+        statuses.forEach((status) => {
+          status.classList.remove("active", "completed");
+          status.classList.add("pending");
+        });
+      }
+
+      // Function to move to the next status
+      function nextStatus() {
+        if (currentStatusIndex < currentOrder.statuses.length - 1) {
+          currentStatusIndex++;
+          updateStatusDisplay();
+        }
+      }
+
+      // Automatically progress to next status every 2 seconds for demonstration (simulates real-time tracking)
+      setInterval(() => {
+        if (
+          currentOrder &&
+          currentStatusIndex < currentOrder.statuses.length - 1
+        ) {
+          nextStatus();
+        }
+      }, 2000);
+    </script>
+  </body>
+</html>

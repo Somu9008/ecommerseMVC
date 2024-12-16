@@ -1,0 +1,131 @@
+<nav>
+  <div class="left-nav">
+    <div style="display:flex;align-items: center;justify-content:center;">
+  
+      <div class="hamberger-menu" style="width: 2.5rem;height: 2.8rem;background-color: rgba(203, 201, 201, 0);margin-top:1rem;padding:0.5rem ;">
+        <div style="width:100%;height:0.2rem;margin-top:0.5rem;background-color:rgb(8, 8, 8)"></div>
+        <div style="width:100%;height:0.2rem;margin-top:0.5rem;background-color:rgb(0, 0, 0)"></div>
+        <div style="width:70%;height:0.2rem;margin-top:0.5rem;background-color:rgb(0, 0, 0)"></div>
+        
+   </div>
+   <h3 class="logo">SHOP WELL</h3>
+    </div>
+  </div>
+  <div class="mid-nav">
+    <div class="nav-link">
+      <a href="/">home</a>
+      <a href="/shop">shop</a>
+      <a href="/about">about</a>
+      <a href="/contact">contact</a>
+    </div>
+    <div class="search">
+      <form action="/shop/category" method="post">
+      <input type="text" name="tname" placeholder="serch item" />
+      <button><i style=" font-size: 1.5rem" class="fa-solid fa-magnifying-glass"></i></button></div></form>
+  </div>
+  <div class="right-nav">
+    <div class="auth">
+      <%if(!currentUser){%>
+      <div class="login-icon"><a href="/login">LOGin</a></div>
+      <div class="signup-icon"><a href="/signup">SignUp</a></div>
+      <%}%> <%if(currentUser){%>
+      <div
+        class="logout-user"
+        style="
+          display: flex;
+          width: 20rem;
+          justify-content: space-around;
+          align-items: center;
+        "
+      >
+        <form action="/cart">
+          <button
+            style="border: none; background-color: transparent"
+            class="cart-icon"
+          >
+            <i
+              class="fa-solid fa-cart-shopping"
+              style="font-size: 2rem; margin-right: 1rem"
+            ></i>
+            <div class="cart-count"><%=currentUser.cartItems.length%></div>
+          </button>
+        </form>
+
+        <div class="username-menu">
+          <div class="user-img">
+            <b
+              style="
+                text-transform: capitalize;
+                font-weight: 900;
+                color: rgb(66, 66, 66);
+                font-family: 'Times New Roman', Times, serif;
+              "
+              ;
+              ><img style="width: 2.5rem; height: 2.5rem; border-radius: 50%"
+              src="<%=currentUser.image.url ? currentUser.image.url :
+              "https://static.vecteezy.com/ti/vetor-gratis/p2/9734564-default-avatar-profile-icon-of-social-media-user-vetor.jpg"%>"
+              alt="" /><span><%=currentUser.username%></span></b
+            >
+          </div>
+          <div class="user-menu">
+            <%if(currentUser && currentUser?.isAdmin){%>
+            <a href="/shop/new">Add New Item</a>
+            <a href="/user"
+              ><i style="margin-right: 0.5rem" class="fa-solid fa-users"></i
+              >AllUser</a
+            >
+            <a href="/orderlist"
+              ><i style="margin-right: 0.5rem" class="fa-solid fa-users"></i
+              >AllOrdersList</a
+            >
+            <%}%>
+
+            <a href="/user/profile">
+              <i style="margin-right: 0.5rem" class="fa-solid fa-user"></i
+              >Profile</a
+            >
+           
+
+            <a href=""
+              ><form method="get" action="/orders">
+                <button
+                  style="
+                    border: none;
+                    outline: none;
+                    font-size: 1rem;
+                    width: 100%;
+                  "
+                >
+                  <i
+                    style="margin-right: 0.5rem"
+                    class="fa-solid fa-right-from-bracket"
+                  ></i
+                  >My orders
+                </button>
+              </form></a
+            >
+            <a href=""
+              ><form method="post" action="/logout">
+                <button
+                  style="
+                    border: none;
+                    outline: none;
+                    font-size: 1rem;
+                    width: 100%;
+                  "
+                >
+                  <i
+                    style="margin-right: 0.5rem"
+                    class="fa-solid fa-right-from-bracket"
+                  ></i
+                  >logout
+                </button>
+              </form></a
+            >
+          </div>
+        </div>
+      </div>
+      <%}%>
+    </div>
+  </div>
+</nav>

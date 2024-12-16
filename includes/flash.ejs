@@ -1,0 +1,31 @@
+<%if(success && success.length){%>
+<div
+  class="flash"
+  style="
+    width: 40%;
+    padding: 0.3rem 1rem;
+    position: absolute;
+    top: 5rem;
+    right: 5rem;
+    border-radius: 10px;
+    background-color: rgba(7, 255, 106, 0.54);
+  "
+>
+  <div><p><%=success%></p></div>
+</div>
+<%}%> <%if(error && error.length){%>
+<div
+  class="flash"
+  style="
+    width: 20%;
+    padding: 0.6rem 1rem;
+    position: absolute;
+    top: 6rem;
+    right: 10rem;
+    border-radius: 10px;
+    background-color: rgba(255, 16, 16, 0.956);
+  "
+>
+  <div><p><%=error%></p></div>
+</div>
+<%}%>

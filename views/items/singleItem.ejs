@@ -1,0 +1,235 @@
+<%-layout("layout/boilerPlate.ejs") %>
+
+<body>
+  <div class="singleitem">
+    <div>
+      <img src="<%=item.image.url%>" alt="" />
+    </div>
+    <div class="item-info" style="margin-top: 3rem; padding-left: 0.5rem">
+      <h2><%=item.title%></h2>
+      <p><%=item.description%></p>
+      <div class="item-review">
+        <p class="starability-result" data-rating="2.5"></p>
+        <b>4.5 total ratings</b>
+      </div>
+
+      <p><b>&#8377;<%=item.price.toLocaleString("en-IN")%></b></p>
+      <p>category : <%=item.category%></p>
+      <form method="post" action="/cart/<%=item._id%>">
+        <button
+          style="
+            background-color: rgb(255, 0, 115);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            color: white;
+            border: none;
+          "
+        >
+          Add To Cart
+        </button>
+      </form>
+      <%if(currentUser && currentUser?.isAdmin){%>
+      <div class="edit-delete" style="display: flex; gap: 2rem">
+        <form action="/shop/<%=item.id%>/edit">
+          <button
+            class=""
+            style="
+              padding: 0.5rem 1rem;
+              border-radius: 5px;
+              background-color: rgb(255, 0, 115);
+              color: white;
+              border: none;
+              width: 6rem;
+            "
+          >
+            Edit
+          </button>
+        </form>
+        <form method="post" action="/shop/<%=item.id%>?_method=DELETE">
+          <button
+            style="
+              border: none;
+              color: white;
+              padding: 0.5rem 1rem;
+              border-radius: 5px;
+              width: 6rem;
+              background-color: rgb(255, 1, 1);
+            "
+          >
+            Delete
+          </button>
+        </form>
+      </div>
+
+      <%}%>
+      <div
+        class=""
+        style="display: flex; justify-content: start; gap: 5rem"
+      ></div>
+    </div>
+  </div>
+  <hr />
+  <div class="reviewform">
+    <form
+      action="/shop/<%=item.id%>/review"
+      method="post"
+      style="width: 50%; margin: auto"
+    >
+      <%if(currentUser){%>
+      <h2>add Your Review</h2>
+      <div style="display: flex; flex-direction: column">
+        <label for="rating">Rating</label>
+
+        <fieldset class="starability-slot">
+          <input
+            type="radio"
+            id="no-rate"
+            class="input-no-rate"
+            name="review[rating]"
+            value="1"
+            checked
+            aria-label="No rating."
+          />
+          <input
+            type="radio"
+            id="first-rate1"
+            name="review[rating]"
+            value="1"
+          />
+          <label for="first-rate1" title="Terrible">1 star</label>
+          <input
+            type="radio"
+            id="first-rate2"
+            name="review[rating]"
+            value="2"
+          />
+          <label for="first-rate2" title="Not good">2 stars</label>
+          <input
+            type="radio"
+            id="first-rate3"
+            name="review[rating]"
+            value="3"
+          />
+          <label for="first-rate3" title="Average">3 stars</label>
+          <input
+            type="radio"
+            id="first-rate4"
+            name="review[rating]"
+            value="4"
+          />
+          <label for="first-rate4" title="Very good">4 stars</label>
+          <input
+            type="radio"
+            id="first-rate5"
+            name="review[rating]"
+            value="5"
+          />
+          <label for="first-rate5" title="Amazing">5 stars</label>
+        </fieldset>
+      </div>
+      <div style="display: flex; flex-direction: column">
+        <label for="comment">Add your comment</label>
+        <textarea
+          cols="100"
+          rows="7"
+          name="review[comment]"
+          id=""
+          style="border-radius: 10px; padding: 1rem"
+          required
+        ></textarea>
+      </div>
+      <br />
+      <button
+        style="
+          background-color: rgb(255, 47, 120);
+          border: none;
+          padding: 0.5rem 1.2rem;
+          border-radius: 7px;
+          color: white;
+        "
+      >
+        add review
+      </button>
+    </form>
+  </div>
+  <%}%>
+
+  <div class="allReviews">
+    <h2 style="margin-left: 5rem">All reviews</h2>
+    <div
+      style="
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+      "
+    >
+      <%for(let review of item.reviews){%>
+      <div
+        class="reviewCard allreviews"
+        style="
+          border: 1px solid gray;
+          padding: 0.1rem 2rem;
+          width: 35%;
+          border-radius: 10px;
+        "
+      >
+        <div style="display: flex; align-items: center">
+          <img
+            style="
+              display: inline-block;
+              height: 3rem;
+              width: 3rem;
+              border-radius: 50%;
+              margin-right: 0.5rem;
+            "
+            src="<%=review.author?.image.url%>"
+            alt=""
+          />
+          <b>@<%=review.author?.username%></b>
+        </div>
+
+        <p class="starability-result" data-rating="<%=review.rating%>"></p>
+        <p><%=review.comment%></p>
+
+        <%if(currentUser && currentUser._id.equals(review.author?._id)){%>
+        <form
+          method="post"
+          action="/shop/<%=item.id%>/review/<%=review.id%>?_method=DELETE"
+        >
+          <button
+            style="
+              background-color: black;
+              padding: 0.5rem 1.2rem;
+              color: white;
+              border-radius: 5px;
+            "
+          >
+            Delete
+          </button>
+        </form>
+        <%}%>
+      </div>
+      <%}%>
+    </div>
+  </div>
+</body>
+
+<script>
+  let allreviews = document.querySelectorAll(".allreviews");
+  let itemReview = document.querySelector(".item-review");
+
+  let totalRating = 0;
+  for (let review of allreviews) {
+    totalRating =
+      totalRating + Number(review.children[1].getAttribute("data-rating"));
+  }
+
+  let rating = totalRating / allreviews.length;
+  console.log(Math.round(rating));
+  itemReview.children[0].setAttribute("data-rating", Math.round(rating));
+  itemReview.children[1].innerHTML = `<h3><b>${rating.toFixed(
+    2
+  )}</b> <span>ratings</span></h3>`;
+</script>

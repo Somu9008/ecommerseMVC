@@ -1,0 +1,125 @@
+<%-layout('/layout/boilerplate.ejs')-%>
+<style>
+  .cartTotalAmount{
+    /* border: 1px solid black; */
+    box-shadow: 2px 2px 8px rgb(59, 59, 59);
+    width: 40%;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-left: 5rem;
+    margin:auto;
+    margin-top: 2rem;
+    padding: 2rem;
+    /* background-color: rgba(0, 0, 0, 0.589); */
+  }
+
+  .cartTotalAmount > div >div{
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .cartTotalAmount > div > form{
+    text-align: end;
+  }
+
+  .cartTotalAmount > div > form > button{
+    padding: 1rem 5rem;
+    background-color: rgb(255, 19, 117);
+    color: white;
+    border-radius: 10px;
+    border: none;
+  }
+</style>
+<body>
+  <div class="allUserCart">
+    <h2>All carts items</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>itemImage</th>
+          <th>Item</th>
+          <th>Price</th>
+          <th>Item Quantity</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if(cartItems.length === 0){%>
+          <h3>No carts!</h3>
+        <%}%>
+      
+        <%for(let cart of cartItems){%>   
+        <tr >
+          <td> 
+            <img
+              style="height: 100px; width: 100px"
+              src="<%=cart.items.image.url%>"
+              alt=""
+            />
+          <td>
+            <%=cart.items.title%></td>
+          </td>
+          <td><%=cart.items.price%> * <%=cart.quantity%> = &#8377;<%= cart.items.price * cart.quantity%></td>
+
+          <td>
+            <div class="quantity-btn" style="display: flex;justify-content: space-around;width: 50%;align-items: center;">
+              <form method="post" action="/item/:<%=cart.items._id%>/cart/<%=cart._id%>/inc?_method=PUT"><button>+</button></form><%=cart.quantity%><form method="post" action="/item/:<%=cart.items._id%>/cart/<%=cart._id%>/dec?_method=PUT"><button>-</button></form>
+            </div>
+            </td>
+          <td>
+            <form
+              method="post"
+              action="/item/:<%=cart.items._id%>/cart/<%=cart._id%>?_method=DELETE"
+              style="padding: 0"
+            >
+              <button
+                type="submit"
+                style="background: transparent; border: none"
+              >
+                <i
+                  class="fa-solid fa-trash"
+                  style="
+                    font-size: 1.4rem;
+                    margin-left: 1rem;
+                    color: rgb(238, 61, 61);
+                    padding: 0;
+                  "
+                  ;
+                ></i>
+              </button>
+            </form>
+          </td>
+        </tr>
+        <%}%>
+      </tbody>
+    </table>
+  </div>
+  <div class="cartTotal">
+    <% let cartTotal = 0 %>
+
+    <%for(let cart of cartItems){%>
+     <% cartTotal += cart.quantity * cart.items.price %>
+  
+    <%}%>
+    <div class="cartTotalAmount">
+        <h2>Cart Total</h2>
+        <hr>
+        <div>
+          <div>
+            <h3>SubTotal :</h3> <p>&#8377; <%=cartTotal%></p>
+          </div>
+          <div>
+            <h3>Shipping:</h3> <p>&#8377; 10</p>
+          </div>
+          <div>
+            <h3>Total Amount:</h3> <p>&#8377; <%=cartTotal + 10%></p>
+          </div>
+          <hr>
+            <form  action="/shippingaddress" style="background: linear-gradient(123deg,rgb(255, 4, 109),rgb(163, 23, 163));color: white;box-shadow: 2px 2px 3px rgb(82, 3, 44);text-align: center;"><button style="background-color: transparent;" >Proceed To CheckOut</button></form>
+        </div>
+    </div>
+     
+  </div>
+</body>
+
+
+
+

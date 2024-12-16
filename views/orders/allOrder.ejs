@@ -1,0 +1,92 @@
+<%-layout('/layout/boilerplate.ejs')-%>
+
+<style>
+  .orderlistTable,
+  th,
+  td {
+    /* border: 1px solid black; */
+    padding: 0.5rem 1rem;
+  }
+
+  .orderlistTable {
+    margin: auto;
+    width: 100%;
+    /* border: 1px solid black; */
+  }
+</style>
+
+<body>
+  <h2>All Order list</h2>
+  <table class="orderlistTable">
+    <thead>
+      <tr>
+        <!-- <th>OrderId</th> -->
+        <th>OrderUser</th>
+        <th>No of Items</th>
+        <!-- <th>OrderQuantity</th> -->
+        <!-- <th>OrderItem</th> -->
+        <!-- <th>OrderItemPrice</th> -->
+        <th>OrderTotalPrice</th>
+        <th>IsPaid</th>
+        <th>Pay Method</th>
+        <th>Isdelivered</th>
+        <th>Orderd Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for(let orders of allOrders){%>
+      <tr>
+        <!-- <td><%=orders._id%></td> -->
+        <td><%=orders.user.username%></td>
+        <!-- <%for(let items of orders.item){%> -->
+        <!-- <td><%=items.quantity%></td> -->
+        <!-- <td><%=items.items.title%></td> -->
+        <!-- <td><%=items.items.price%></td> -->
+
+        <%}%>
+        <td><%=orders.item.length%> Item</td>
+        <td><%=orders.totalPrice%></td>
+
+        <td>
+          <p><%=orders.ispaid%></p>
+          <form method="post" action="/orderlist/<%=orders._id%>?_method=PUT">
+            <select name="ispaid" id="">
+              <option value="paid">Paid</option>
+              <option value="unpaid">Unpaid</option>
+            </select>
+            <button>isPaid</button>
+          </form>
+        </td>
+        <td><%=orders.paymentmethod%></td>
+
+        <td>
+          <p><%=orders.isdeliverd%></p>
+          <form method="post" action="/orderlist/<%=orders.id%>?_method=PUT">
+            <select name="isdeliverd" id="">
+              <option value="order-placed">order Placed</option>
+              <option value="shipping">Shipping</option>
+              <option value="out-for-delivery">Out for delivery</option>
+              <option value="delivered">Delivered</option>
+            </select>
+            <button>change isDeleverd</button>
+          </form>
+        </td>
+        <td><%=orders.orderDate.toString().split(" ").slice(0,5)%></td>
+        <td>
+          <form action="/orderlist/<%=orders._id%>">
+            <button>More...</button>
+          </form>
+        </td>
+        <td>
+          <form
+            method="post"
+            action="/orderlist/<%=orders._id%>?_method=DELETE"
+          >
+            <button>remove Order</button>
+          </form>
+        </td>
+      </tr>
+      <%}%>
+    </tbody>
+  </table>
+</body>

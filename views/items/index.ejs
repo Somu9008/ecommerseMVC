@@ -1,0 +1,158 @@
+<% layout('layout/boilerPlate.ejs') %>
+<style>
+  .categorys {
+    width: 90%;
+    border: 1px solid rgb(255, 255, 255);
+    height: 2rem;
+    margin-top: 0rem;
+    position: fixed;
+    display: flex;
+    align-items: center;
+    z-index: 99;
+    background-color: rgb(255, 255, 255);
+    padding: 0.6rem;
+    margin: auto;
+    text-align: center;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .category {
+    width: 8%;
+    margin-right: 0.1rem;
+  }
+
+  .category form {
+    /* border: 1px solid rgb(13, 13, 13); */
+    text-align: center;
+    background-color: rgb(74, 74, 74);
+    border-radius: 5px;
+  }
+
+  .category form button {
+    background-color: transparent;
+    /* border: 2px solid rgb(165, 165, 165); */
+    color: rgb(251, 251, 251);
+    /* font-weight: 700; */
+    font-size: 1rem;
+    padding: 0.7rem 1rem;
+    border: none;
+    text-align: center;
+  }
+
+  .category form:hover {
+    background-color: rgb(104, 104, 104);
+    color: rgb(255, 255, 255);
+  }
+</style>
+<body>
+  <div class="categorys">
+    <div class="category">
+      <form action="/shop/category/electronics">
+        <button>Electronic</button>
+      </form>
+    </div>
+    <div class="category">
+      <form action="/shop/category/clothes">
+        <button>Clothes</button>
+      </form>
+    </div>
+    <div class="category">
+      <form action="/shop/category/shoes">
+        <button>Shoes</button>
+      </form>
+    </div>
+    <div class="category">
+      <form action="/shop/category/">
+        <button>electronic</button>
+      </form>
+    </div>
+    <div class="category">
+      <form action="/shop/category/">
+        <button>electronic</button>
+      </form>
+    </div>
+    <div class="category">
+      <form action="/shop/category/">
+        <button>electronic</button>
+      </form>
+    </div>
+    <div class="category">
+      <form action="/shop/category/">
+        <button>electronic</button>
+      </form>
+    </div>
+    <div class="category">
+      <form action="/shop/category/">
+        <button>electronic</button>
+      </form>
+    </div>
+    <div class="category">
+      <form action="/shop/category/">
+        <button>electronic</button>
+      </form>
+    </div>
+    <div class="category">
+      <form action="/shop/category/">
+        <button>electronic</button>
+      </form>
+    </div>
+    <div class="category">
+      <form action="/shop/category/">
+        <button>electronic</button>
+      </form>
+    </div>
+    <div class="category">
+      <form action="/shop/category/">
+        <button>electronic</button>
+      </form>
+    </div>
+    <div class="category">
+      <form action="/shop/category/">
+        <button>electronic</button>
+      </form>
+    </div>
+    <div class="category">
+      <form action="/shop/category/">
+        <button>electronic</button>
+      </form>
+    </div>
+    <div class="category">
+      <form action="/shop/category/">
+        <button>electronic</button>
+      </form>
+    </div>
+    <div class="category">
+      <form action="/shop/category/">
+        <button>electronic</button>
+      </form>
+    </div>
+    <div class="category">
+      <form action="/shop/category/">
+        <button>electronic</button>
+      </form>
+    </div>
+    <div class="category">
+      <form action="/shop/category/">
+        <button>electronic</button>
+      </form>
+    </div>
+    <div class="category">
+      <form action="/shop/category/">
+        <button>electronic</button>
+      </form>
+    </div>
+  </div>
+  <h2>All Items For shop</h2>
+  <div class="allitems">
+    <%for(let item of AllItems ){%>
+    <a href="/shop/<%=item.id%>">
+      <div class="card">
+        <img src="<%=item.image.url%>" alt="" />
+        <div class="card-text">
+          <p><%=item.title%></p>
+        </div>
+      </div>
+    </a>
+    <%}%>
+  </div>
+</body>

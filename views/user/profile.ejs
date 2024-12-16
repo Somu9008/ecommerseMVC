@@ -1,0 +1,57 @@
+<%- layout('layout/boilerPlate.ejs') %>
+<body>
+  <div class="edit-form">
+    <h2>Update Your Profile</h2>
+    <form
+      method="post"
+      action="/user/profile?_method=PUT"
+      enctype="multipart/form-data"
+    >
+      <div>
+        <div class="profileimage">
+          <img
+            style="border-radius: 50%; height: 10rem; width: 10rem"
+            src="<%=currentUser.image.url%>"
+            alt=""
+          />
+          <input type="file" name="image" />
+          <i class="fa-solid fa-camera"></i>
+        </div>
+        <b>Uplode profile Image</b>
+      </div>
+
+      <div>
+        <label for="user">username</label>
+        <input
+          type="text"
+          name="username"
+          value="<%=currentUser.username%>"
+          required
+        />
+      </div>
+      <div>
+        <label for="email">email</label>
+        <input type="email" name="email" value="<%=currentUser.email%>" />
+      </div>
+      <div>
+        <label for="newpassword">newPassword</label>
+        <input type="password" name="newpassword" />
+      </div>
+      <div>
+        <label for="confirmpassword">confirmPassword</label>
+        <input type="password" name="password" />
+      </div>
+      <button
+        style="
+          background-color: rgb(255, 47, 120);
+          padding: 0.8rem 1.5rem;
+          color: white;
+          border-radius: 10px;
+          border: none;
+        "
+      >
+        Update Profile
+      </button>
+    </form>
+  </div>
+</body>

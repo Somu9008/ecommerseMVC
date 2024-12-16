@@ -1,0 +1,60 @@
+<%-layout('/layout/boilerplate.ejs')-%>
+
+<style>
+  .orderDetailes {
+    display: flex;
+    /* border: 1px solid black; */
+    justify-content: space-around;
+    background-color: rgb(247, 247, 247);
+    width: 80%;
+    margin: auto;
+    flex-direction: column;
+    padding: 2rem;
+    box-shadow: 2px 2px 8px rgb(59, 59, 59);
+  }
+
+  
+
+  .orderdetailesItems {
+    display: flex;
+    /* width: 100%; */
+    align-items: center;
+    justify-content: space-between;
+
+  }
+</style>
+
+<body>
+  <h2>OrderDetails</h2>
+  <div class="orderDetailes">
+    <div>
+      <h2><%=orderDetailes._id%></h2>
+      <%for(let orderItems of orderDetailes.item){%>
+      <div class="orderdetailesItems">
+        <div><img
+          style="width: 10rem; height: 10rem"
+          src="<%=orderItems.items.image.url%>"
+          alt=""
+        />
+        <h3><%=orderItems.items.title%></h3></div>
+        
+        
+        <h2>Item price:&#8377;  <%=orderItems.items.price%></h2>
+        <h2>quantity : <%=orderItems.quantity%></h2>
+        <h3>total :&#8377; <%=orderItems.items.price * orderItems.quantity%></h3> </h4>
+      </div>
+      <%}%>
+    </div>
+
+    <div>
+      <h1>Total Price :&#8377; <%=orderDetailes.totalPrice%></h1>
+      <h4><%=orderDetailes.user.username%></h4>
+      <p>Mobile_no: <%=orderDetailes.shoppingAddress.mobileno%></p>
+      <p>City name: <%=orderDetailes.shoppingAddress.city%></p>
+      <p>Area: <%=orderDetailes.shoppingAddress.area%></p>
+      <p>Dist: <%=orderDetailes.shoppingAddress.dist%></p>
+      <p>Country: <%=orderDetailes.shoppingAddress.country%></p>
+      <h4><%=orderDetailes.orderDate.toString().split(" ").slice(0,5)%></h4>
+    </div>
+  </div>
+</body>
