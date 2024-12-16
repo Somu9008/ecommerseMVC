@@ -37,20 +37,15 @@ module.exports.signUpUser = async (req, res) => {
   }
 };
 
-module.exports.loginUser = (req, res) => {
+module.exports.loginUser = async (req, res) => {
   req.flash("success", "logged in successfully!");
   let originalUrl = res.locals.originalUrl ? res.locals.originalUrl : "/";
-  User.findOne({ user: req.user.id })
-    .then((profile) => {
-      if (!profile) {
-        return res.status(404).json({ error: "No user Found" });
-      } else {
-        res.redirect(originalUrl);
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  let user = await User.findOne({ user: req.user.id });
+  if (!user) {
+    return res.status(404).json({ error: "No user Found" });
+  } else {
+    res.redirect(originalUrl);
+  }
 };
 
 module.exports.logoutUser = (req, res, next) => {
