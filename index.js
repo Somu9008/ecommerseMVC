@@ -104,6 +104,8 @@ app.use((err, req, res, next) => {
   res.status(status).render("items/Error.ejs", { message });
 });
 
-app.listen(5000, () => {
-  console.log("this server port is running under ", 5000);
+let port = 5000 || 12000;
+
+app.listen(port, () => {
+  console.log("this server port is running under ", port);
 });
