@@ -40,7 +40,7 @@ module.exports.signUpUser = async (req, res) => {
 module.exports.loginUser = (req, res) => {
   req.flash("success", "logged in successfully!");
   let originalUrl = res.locals.originalUrl ? res.locals.originalUrl : "/";
-  res.status(200).redirect(originalUrl);
+  res.redirect(originalUrl);
 };
 
 module.exports.logoutUser = (req, res, next) => {
