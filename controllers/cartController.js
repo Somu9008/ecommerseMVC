@@ -21,34 +21,41 @@ module.exports.getAllCarts = async (req, res) => {
 };
 
 module.exports.addToCart = async (req, res) => {
-  let id = req.user._id;
-  let user = await User.findById(id).populate({
-    path: "cartItems",
-    populate: { path: "items" },
-  });
-  let { itemId } = req.params;
-  let newItem = await Item.findById(itemId);
-  let cart = new Cart({
-    quantity: 1,
-  });
-  cart.items = newItem;
-  cart.user = req.user._id;
+  if (req.user) {
+    let id = req.user._id;
+    let user = await User.findById(id).populate({
+      path: "cartItems",
+      populate: { path: "items" },
+    });
+    let { itemId } = req.params;
+    let newItem = await Item.findById(itemId);
+    let cart = new Cart({
+      quantity: 1,
+    });
+    cart.items = newItem;
+    cart.user = req.user._id;
 
-  for (let carts of user.cartItems) {
-    if (carts.items.id === cart.items.id) {
-      req.flash("error", "item already exist in cart");
-      return res.redirect(`/shop/${itemId}`);
+    for (let carts of user.cartItems) {
+      if (carts.items.id === cart.items.id) {
+        req.flash("error", "item already exist in cart");
+        return res.redirect(`/shop/${itemId}`);
+      }
     }
+    // if (user.cartItems.includes(itemId)) {
+    //   req.flash("error", "item already added to cart");
+    //   return req.redirect(`/shop/${itemId}`);
+    // }
+
+    await cart.save();
+    user.cartItems.push(cart);
+    user.save();
+    req.flash("success", "item added to cart!");
+    res.redirect(`/shop/${itemId}`);
+  } else {
+    let { itemId } = req.params;
+    req.flash("error", "please login to add cart Items");
+    res.redirect(`/shop/${itemId}`);
   }
-  // if (user.cartItems.includes(itemId)) {
-  //   req.flash("error", "item already added to cart");
-  //   return req.redirect(`/shop/${itemId}`);
-  // }
-  await cart.save();
-  user.cartItems.push(cart);
-  user.save();
-  req.flash("success", "item added to cart!");
-  res.redirect(`/shop/${itemId}`);
 };
 
 module.exports.updateCartinc = async (req, res) => {

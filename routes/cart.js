@@ -14,7 +14,7 @@ const router = express.Router();
 
 router.route("/cart").get(isLoggedIn, warpAsync(getAllCarts));
 
-router.route("/cart/:itemId").post(isLoggedIn, warpAsync(addToCart));
+router.route("/cart/:itemId").post(warpAsync(addToCart));
 
 router
   .route("/item/:itemId/cart/:cartId")

@@ -26,8 +26,24 @@
   <div class="right-nav">
     <div class="auth">
       <%if(!currentUser){%>
+        <form action="/cart">
+          <button
+            style="border: none; background-color: transparent"
+            class="cart-icon"
+          >
+            <i
+              class="fa-solid fa-cart-shopping"
+              style="font-size: 2rem; margin-right: 1rem"
+            ></i>
+            <%if(currentUser){%>
+              <div class="cart-count"><%currentUser?.cartItems.length ? currentUser.cartItems.length : 0 %></div>
+            <%}%>
+            
+          </button>
+        </form>
       <div class="login-icon"><a href="/login">LOGin</a></div>
       <div class="signup-icon"><a href="/signup">SignUp</a></div>
+      
       <%}%> <%if(currentUser){%>
       <div
         class="logout-user"
@@ -38,18 +54,22 @@
           align-items: center;
         "
       >
-        <form action="/cart">
-          <button
-            style="border: none; background-color: transparent"
-            class="cart-icon"
-          >
-            <i
-              class="fa-solid fa-cart-shopping"
-              style="font-size: 2rem; margin-right: 1rem"
-            ></i>
-            <div class="cart-count"><%=currentUser.cartItems.length%></div>
-          </button>
-        </form>
+      <form action="/cart">
+        <button
+          style="border: none; background-color: transparent"
+          class="cart-icon"
+        >
+          <i
+            class="fa-solid fa-cart-shopping"
+            style="font-size: 2rem; margin-right: 1rem"
+          ></i>
+          <div class="cart-count">
+              <%=currentUser.cartItems.length%>
+            </div>
+        
+          
+        </button>
+      </form>
 
         <div class="username-menu">
           <div class="user-img">
