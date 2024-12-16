@@ -45,7 +45,8 @@ module.exports.loginUser = async (req, res) => {
     return res.redirect("/login");
   } else {
     let { itemId } = req.params;
-    res.redirect(originalUrl === `/cart/${itemId}` ? "/cart" : originalUrl);
+    let redirect = originalUrl === `/cart/${itemId}` ? "/cart" : originalUrl;
+    res.redirect(redirect);
   }
 };
 
