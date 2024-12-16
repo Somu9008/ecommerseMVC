@@ -18,7 +18,6 @@ router.route("/cart/:itemId").post(isLoggedIn, warpAsync(addToCart));
 
 router
   .route("/item/:itemId/cart/:cartId")
-
   .delete(isLoggedIn, warpAsync(destroyCartItem));
 
 router
