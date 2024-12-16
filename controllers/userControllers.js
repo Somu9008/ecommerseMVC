@@ -40,9 +40,9 @@ module.exports.signUpUser = async (req, res) => {
 module.exports.loginUser = async (req, res) => {
   req.flash("success", "logged in successfully!");
   let originalUrl = res.locals.originalUrl ? res.locals.originalUrl : "/";
-  let user = await User.findOne({ user: req.user.id });
+  let user = await User.find({ user: req.user.id });
   if (!user) {
-    return res.status(404).json({ error: "No user Found" });
+    return res.redirect("/login");
   } else {
     res.redirect(originalUrl);
   }
