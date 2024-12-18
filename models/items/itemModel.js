@@ -28,16 +28,7 @@ const itemSchema = new Schema({
   ],
   category: {
     type: String,
-    enum: [
-      "clothes",
-      "electronics",
-      "drese",
-      "shoes",
-      "mobiles",
-      "computers",
-      "laptops",
-      "beautyproducts",
-    ],
+    enum: ["electronics", "accessories", "home", "clothing"],
   },
 });
 

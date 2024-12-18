@@ -3,7 +3,9 @@ const Item = require("../models/items/itemModel");
 const AllItems = require("../data");
 
 async function main() {
-  await mongoose.connect("mongodb://127.0.0.1:27017/ecommerse");
+  await mongoose.connect(
+    "mongodb+srv://somu2001:somu2001@cluster0.lqzzx.mongodb.net/ecommerse"
+  );
 }
 
 main().then(() => {
