@@ -166,7 +166,7 @@ module.exports.placeOrder = async (req, res) => {
 module.exports.orderList = async (req, res) => {
   const allOrders = await Order.find()
     .populate("user")
-    .populate({ path: "item", model: Cart, populate: { path: "items" } });
+    .populate({ path: "item", populate: { path: "items" } });
 
   // console.log("totalcartPrice", cartItemsTotalPrice);
 
